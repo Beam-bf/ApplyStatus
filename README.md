@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
@@ -30,3 +31,29 @@ If you are developing a production application, we recommend enabling type-aware
 ```
 
 See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+=======
+
+ApplyStatus is a web application designed to help job seekers organize their job applications, track interview progress, and manage important deadlines in one place.
+
+Features
+
+Track job applications and their statuses
+
+Organize applications by company and job role
+
+Record interview dates and follow-up deadlines
+
+Search and filter applications
+
+View application statistics through a dashboard
+
+Tech Stack
+
+React
+
+TypeScript
+
+Tailwind CSS
+
+Supabase
+>>>>>>> 2df1dabf700f731af3421819b14d169937a02885
