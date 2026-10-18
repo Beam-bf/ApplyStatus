@@ -1,5 +1,5 @@
 
-ApplyFlow is a web application designed to help job seekers organize their job applications, track interview progress, and manage important deadlines in one place.
+ApplyStatusis a web application designed to help job seekers organize their job applications, track interview progress, and manage important deadlines in one place.
 
 Features
 
