@@ -1,122 +1,207 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+
+import { useState } from "react";
+import "./App.css";
+
+type Application = {
+  id: number;
+  company: string;
+  role: string;
+  status: "Applied" | "Interview" | "Rejected" | "Offer";
+  date: string;
+};
+
+const initialApplications: Application[] = [
+  {
+    id: 1,
+    company: "Google",
+    role: "Frontend Developer Intern",
+    status: "Applied",
+    date: "2026-10-15",
+  },
+  {
+    id: 2,
+    company: "Microsoft",
+    role: "Software Engineer Intern",
+    status: "Interview",
+    date: "2026-10-14",
+  },
+  {
+    id: 3,
+    company: "Careem",
+    role: "React Developer Intern",
+    status: "Offer",
+    date: "2026-10-12",
+  },
+];
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [applications, setApplications] =
+    useState<Application[]>(initialApplications);
+
+  const total = applications.length;
+  const interviews = applications.filter(
+    (app) => app.status === "Interview"
+  ).length;
+  const offers = applications.filter(
+    (app) => app.status === "Offer"
+  ).length;
+  const pending = applications.filter(
+    (app) => app.status === "Applied"
+  ).length;
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div className="app">
+      <aside className="sidebar">
+        <h2 className="logo">ApplyFlow<span>.</span></h2>
+        <p className="sidebar-label">WORKSPACE</p>
+        <nav>
+          <a className="nav-link active" href="#dashboard">
+            ▦ Dashboard
+          </a>
+          <a className="nav-link" href="#applications">
+            ▤ Applications
+          </a>
+        </nav>
+        <div className="sidebar-bottom">
+          <div className="avatar">BF</div>
+          <div>
+            <strong>My Workspace</strong>
+            <p>Job seeker</p>
+          </div>
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+      </aside>
 
-      <div className="ticks"></div>
+      <main className="main-content" id="dashboard">
+        <header className="topbar">
+          <span>My Workspace / Dashboard</span>
+          <span className="today">October 2026</span>
+        </header>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        <section className="welcome">
+          <div>
+            <p className="eyebrow">YOUR CAREER, ORGANIZED</p>
+            <h1>Job search, simplified.</h1>
+            <p className="subtitle">
+              Keep track of every opportunity and move forward with confidence.
+            </p>
+          </div>
+          <button
+            className="primary-button"
+            onClick={() => {
+              const company = window.prompt("Enter the company name:");
+              if (!company?.trim()) return;
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+              const role = window.prompt("Enter the job title:");
+              if (!role?.trim()) return;
+
+              setApplications((previous) => [
+                {
+                  id: Date.now(),
+                  company: company.trim(),
+                  role: role.trim(),
+                  status: "Applied",
+                  date: new Date().toISOString().slice(0, 10),
+                },
+                ...previous,
+              ]);
+            }}
+          >
+            + Add application
+          </button>
+        </section>
+
+        <section className="stats">
+          <StatCard label="Total applications" value={total} symbol="↗" />
+          <StatCard label="Interviews" value={interviews} symbol="◎" />
+          <StatCard label="Awaiting response" value={pending} symbol="◷" />
+          <StatCard label="Offers received" value={offers} symbol="✦" />
+        </section>
+
+        <section className="applications-section" id="applications">
+          <div className="section-heading">
+            <div>
+              <h2>Recent applications</h2>
+              <p>Your latest career opportunities at a glance.</p>
+            </div>
+            <span className="count">{total} applications</span>
+          </div>
+
+          <div className="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>COMPANY & ROLE</th>
+                  <th>DATE APPLIED</th>
+                  <th>STATUS</th>
+                </tr>
+              </thead>
+              <tbody>
+                {applications.map((app) => (
+                  <tr key={app.id}>
+                    <td>
+                      <strong>{app.company}</strong>
+                      <span className="role">{app.role}</span>
+                    </td>
+                    <td>{app.date}</td>
+                    <td>
+                      <select
+                        className={`status status-${app.status.toLowerCase()}`}
+                        value={app.status}
+                        onChange={(event) =>
+                          setApplications((previous) =>
+                            previous.map((item) =>
+                              item.id === app.id
+                                ? {
+                                    ...item,
+                                    status: event.target.value as Application["status"],
+                                  }
+                                : item
+                            )
+                          )
+                        }
+                      >
+                        <option>Applied</option>
+                        <option>Interview</option>
+                        <option>Rejected</option>
+                        <option>Offer</option>
+                      </select>
+                    </td>
+                  </tr>
+                ))}
+                {applications.length === 0 && (
+                  <tr>
+                    <td colSpan={3} className="empty-state">
+                      No applications yet. Add your first opportunity!
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+  );
 }
 
-export default App
+function StatCard({
+  label,
+  value,
+  symbol,
+}: {
+  label: string;
+  value: number;
+  symbol: string;
+}) {
+  return (
+    <div className="stat-card">
+      <div className="stat-top">
+        <span>{label}</span>
+        <span className="stat-symbol">{symbol}</span>
+      </div>
+      <strong className="stat-value">{value}</strong>
+    </div>
+  );
+}
+
+export default App;
