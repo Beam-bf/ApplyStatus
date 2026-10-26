@@ -48,6 +48,17 @@ function App() {
   const pending = applications.filter(
     (app) => app.status === "Applied"
   ).length;
+  const deleteApplication = (id: number) => {
+  const confirmed = window.confirm(
+    "Are you sure you want to delete this application?"
+  );
+
+  if (!confirmed) return;
+
+  setApplications((previous) =>
+    previous.filter((app) => app.id !== id)
+  );
+};
 
   return (
     <div className="app">
@@ -137,7 +148,7 @@ function App() {
               </thead>
               <tbody>
                 {applications.map((app) => (
-                  <tr key={app.id}>
+                 <tr key={app.id}>
                     <td>
                       <strong>{app.company}</strong>
                       <span className="role">{app.role}</span>
